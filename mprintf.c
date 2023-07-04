@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include <time.h>
 
 int mprintf(const char *str,...){   
     va_list ptr;
@@ -57,11 +56,6 @@ int mprintf(const char *str,...){
     return 0;
 }
 int main() {
-    clock_t start=clock();
-    printf("The quick %i brown %.4f fox %c jumped over %li the lazy %s dog", 23, 20.23, 'x', 20202020,"The rise of Hmans");
-    printf("\n%fs\n",(float)(clock()-start)/CLOCKS_PER_SEC);
-    start=clock();
     mprintf("The quick %i brown %.4f fox %c jumped over %li the lazy %s dog", 23, 20.23, 'x', 20202020,"The rise of Humans");
-    printf("\n%fs\n",(float)(clock()-start)/CLOCKS_PER_SEC);
     return 0;
 }

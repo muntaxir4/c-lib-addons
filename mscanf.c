@@ -1,16 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
 
-
 int mscanf(const char *str,...){
-    char token[sizeof(str)];int k=0;
+    char token[50];int k=0;
     va_list ptr;
-    va_start(ptr,str);
-    for(int i=0;str[i]!='\0';i++){
+    va_start(ptr,str);//str is the last known variable name
+    for(int i=0;str[i]!='\0';i++){//loop runs till null character is found in str
         token[k++]=str[i];        
         if(str[i+1]=='%' || str[i+1]=='\0'){
-            token[k]='\0';k=0;
+            token[k]='\0';//terminating with null char to make it a string
+            k=0;
             if(token[0]=='%'){
                 char ch1=token[1];
                 if(ch1=='i'||ch1=='d'|| ch1=='u'){
@@ -22,9 +21,9 @@ int mscanf(const char *str,...){
                     fprintf(stdout,"%s",token+2);
                 }
                 else if(ch1=='c'){
-                    char c;
-                    while((c=fgetc(stdin))=='\n'||c==' '||c==EOF){}
-                    *va_arg(ptr,char*)=c;
+                    char c;//scanf() ignores ' ' and '\n' if it is scanning char format
+                    while((c=fgetc(stdin))=='\n'||c==' '||c==EOF){}//using this loop to ignore some chars
+                    *va_arg(ptr,char*)=c;//storing the char value now
                     fprintf(stdout,"%s",token+2);
                 }
                 else if(ch1=='f'){
@@ -60,16 +59,17 @@ int mscanf(const char *str,...){
             }
             else{
                 
-                fprintf(stdout,"%s",token);
+                fprintf(stdout,"%s",token);//printing the string if it does not contain a format specifier
             }
         }
     }
+    va_end(ptr);
     return 0;
 }
 int main(){
-    int a;float b; char c;char s[20]; short d;long long e;
-    mscanf("Scan this %i HEllo %c %sBYEBYe",&a,&c,s);
-    printf("%i -%c- >%s<",a,c,s);
+    int a;char c;char s[20];
+    mscanf("Enter integer, character and string, Integer: %i Character: %c String: %s",&a,&c,s);
+    printf("%i %c %s",a,c,s);
     return 0;
 }
 //bugs: xscanf("%i %c %s",&a,&c); returns segfault whereas scanf doesnt
