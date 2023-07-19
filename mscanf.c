@@ -10,56 +10,41 @@ int mscanf(const char *str,...){
         if(str[i+1]=='%' || str[i+1]=='\0'){
             token[k]='\0';//terminating with null char to make it a string
             k=0;
-            if(token[0]=='%'){
-                char ch1=token[1];
-                if(ch1=='i'||ch1=='d'|| ch1=='u'){
-                    fscanf(stdin,"%i",va_arg(ptr,int*));
-                    fprintf(stdout,"%s",token+2);
+            char ch1=token[1];
+            if(ch1=='i'||ch1=='d'|| ch1=='u'){
+                fscanf(stdin,"%i",va_arg(ptr,int*));
+            }
+            else if(ch1=='h'){
+                fscanf(stdin,"%hi",va_arg(ptr,short*));
+            }
+            else if(ch1=='c'){
+                char c;//scanf() ignores ' ' and '\n' if it is scanning char format
+                while((c=fgetc(stdin))=='\n'||c==' '||c==EOF){}//using this loop to ignore some chars
+                *va_arg(ptr,char*)=c;//storing the char value now
+            }
+            else if(ch1=='f'){
+                fscanf(stdin,"%f",va_arg(ptr,float*));
+            }
+            else if(ch1=='l'){
+                char ch2=token[2];
+                if(ch2=='u'||ch2=='d'||ch2=='i'){
+                    fscanf(stdin,"%li",va_arg(ptr,long*));
                 }
-                else if(ch1=='h'){
-                    fscanf(stdin,"%hi",va_arg(ptr,short*));
-                    fprintf(stdout,"%s",token+2);
-                }
-                else if(ch1=='c'){
-                    char c;//scanf() ignores ' ' and '\n' if it is scanning char format
-                    while((c=fgetc(stdin))=='\n'||c==' '||c==EOF){}//using this loop to ignore some chars
-                    *va_arg(ptr,char*)=c;//storing the char value now
-                    fprintf(stdout,"%s",token+2);
-                }
-                else if(ch1=='f'){
-                    fscanf(stdin,"%f",va_arg(ptr,float*));
-                    fprintf(stdout,"%s",token+2);
-                }
-                else if(ch1=='l'){
-                    char ch2=token[2];
-                    if(ch2=='u'||ch2=='d'||ch2=='i'){
-                        fscanf(stdin,"%li",va_arg(ptr,long*));
-                        fprintf(stdout,"%s",token+3);
-                    }
-                    else if(ch2=='f'){
-                        fscanf(stdin,"%lf",va_arg(ptr,double*));
-                        fprintf(stdout,"%s",token+3);
-                    }
-                }
-                else if(ch1=='L'){
-                    char ch2=token[2];
-                    if(ch2=='u'||ch2=='d'||ch2=='i'){
-                        fscanf(stdin,"%Li",va_arg(ptr,long long*));
-                        fprintf(stdout,"%s",token+3);
-                    }
-                    else if(ch2=='f'){
-                        fscanf(stdin,"%Lf",va_arg(ptr,long double*));
-                        fprintf(stdout,"%s",token+3);
-                    }
-                    }
-                else if(ch1=='s'){
-                    fscanf(stdin,"%s",va_arg(ptr,char*));
-                    fprintf(stdout,"%s",token+2);
+                else if(ch2=='f'){
+                    fscanf(stdin,"%lf",va_arg(ptr,double*));
                 }
             }
-            else{
-                
-                fprintf(stdout,"%s",token);//printing the string if it does not contain a format specifier
+            else if(ch1=='L'){
+                char ch2=token[2];
+                if(ch2=='u'||ch2=='d'||ch2=='i'){
+                    fscanf(stdin,"%Li",va_arg(ptr,long long*));
+                }
+                else if(ch2=='f'){
+                    fscanf(stdin,"%Lf",va_arg(ptr,long double*));
+                }
+                }
+            else if(ch1=='s'){
+                fscanf(stdin,"%s",va_arg(ptr,char*));
             }
         }
     }
@@ -68,7 +53,7 @@ int mscanf(const char *str,...){
 }
 int main(){
     int a;char c;char s[20];
-    mscanf("Enter integer, character and string, Integer: %i Character: %c String: %s",&a,&c,s);
+    mscanf("%i %c %s",&a,&c,s);
     printf("%i %c %s",a,c,s);
     return 0;
 }
