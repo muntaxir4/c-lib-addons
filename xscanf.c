@@ -66,10 +66,10 @@ int xscanf(const char *str,...){
     va_end(ptr);
     return 0;
 }
-int main(){
-    int a;char c;char s[20];
-    xscanf("Enter integer, character and string, Integer: %i Character: %c String: %s",&a,&c,s);
-    printf("%i %c %s",a,c,s);
-    return 0;
-}
+// int main(){
+//     int a;char c;char s[20];
+//     xscanf("Enter integer, character and string, Integer: %i Character: %c String: %s",&a,&c,s);
+//     printf("%i %c %s",a,c,s);
+//     return 0;
+// }
 //bugs: xscanf("%i %c %s",&a,&c); returns segfault whereas scanf doesnt

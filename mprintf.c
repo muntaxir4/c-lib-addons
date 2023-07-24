@@ -55,7 +55,7 @@ int mprintf(const char *str,...){
     va_end(ptr);
     return 0;
 }
-int main() {
-    mprintf("The quick %i brown %.4f fox %c jumped over %li the lazy %s dog", 23, 20.23, 'x', 20202020,"The rise of Humans");
-    return 0;
-}
+// int main() {
+//     mprintf("The quick %i brown %.4f fox %c jumped over %li the lazy %s dog", 23, 20.23, 'x', 20202020,"The rise of Humans");
+//     return 0;
+// }
